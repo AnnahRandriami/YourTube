@@ -20,7 +20,10 @@
     </section>
     <section id="new">
         <p>New on yourTube?</p>
-   <li><a href="#">Create account here</a> </li> 
+
+ 
+            <li><a href="create">Create account here</a> </li>
+    
 
 </section>
 </main>

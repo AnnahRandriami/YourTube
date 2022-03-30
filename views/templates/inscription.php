@@ -1,10 +1,10 @@
 <?php include('header.php') ?>
 <main>
     <section id="pageInscription">
-        <form action="inscription">
+        <form action="inscription" >
             <h3>Inscription</h3>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <input type="text" name =""class="form-control" id="floatingInput" placeholder="name@example.com">
                 <label for="floatingInput">Name</label>
             </div>
             <div class="form-floating mb-3">

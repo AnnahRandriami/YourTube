@@ -1,39 +1,48 @@
 <?php include('header.php') ?>
+
 <body>
-    
 
-<main>
-<section id="profil">
-        <form action="uptadeProfil">
-            <h3>Your profil</h3>
-            <img id="picture" src="http://localhost/yourTube/src/images/music.jpg" style="width :18rem"alt="">
-            <button type="submit">Télechager</button>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="lol" placeholder="name@example.com">
-                <label for="floatingInput">Name</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="" placeholder="name@example.com">
-                <label for="floatingInput">Lastname</label>
-            </div>
 
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="" placeholder="name@example.com">
-                <label for="floatingInput">Pseudo</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="" placeholder="name@example.com">
-                <label for="floatingInput">Email address</label>
-            </div>
+    <main>
+        <section id="profil">
+            <form action="profil" method="post" enctype="multipart/form-data">
+                <img id="picture" src="http://localhost/yourTube/src/images/music.jpg" style="width :18rem" alt="">
+                <label for="file">Fichier</label>
+                <input type="file" name="file" >
+                <button type="submit">Télechager</button>
 
-            <div class="form-floating">
-                <input type="password" class="form-control" id="" placeholder="Password">
-                <label for="floatingPassword">Password</label>
-            </div>
-            <button type="submit">Modifier</button>
-        </form>
-    </section>
-</main>
+            </form>
+
+            <form action="profil" method="get">
+                <h3>Your profil</h3>
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="lol" value="<?= $data_users[0]['lastname'] ?>" placeholder="name@example.com">
+                    <label for="floatingInput">Name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" value="<?= $data_users[0]['firstname'] ?>" id="" placeholder="name@example.com">
+                    <label for="floatingInput">Lastname</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" value="<?= $data_users[0]['pseudo'] ?>" id="" placeholder="name@example.com">
+                    <label for="floatingInput">Pseudo</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" value="<?= $data_users[0]['email'] ?>" id="" placeholder="name@example.com">
+                    <label for="floatingInput">Email address</label>
+                </div>
+
+                <div class="form-floating">
+                    <input type="password" class="form-control" value="<?= $data_users[0]['passwords'] ?>" id="" placeholder="Password">
+                    <label for="floatingPassword">Password</label>
+                </div>
+                <button type="submit" value="<?= $data_users[0]['idUsers'] ?>" name="idUsers">Modifier</button>
+            </form>
+        </section>
+    </main>
 </body>
+
 </html>
 <?php include('footer.php') ?>

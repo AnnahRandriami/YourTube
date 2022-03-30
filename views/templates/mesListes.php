@@ -9,16 +9,29 @@
             <option value="1">Category</option>
         </select>
     </div>
-
-
+    
+    <table>
+      <tr>
+            <td name="" value="" id="title"><?= $value['title']?></td>
+            <td name="" value="" id="type"><?= $value['type']?></td>
+            <td name="" value="" id="category"><?= $value['category']?></td>
+            <td name="" value="" id="Auteur"><?= $value['athor']?></td  >
+            <td name="" value="" id="DateUptade" style="font-size : 0.8rem"><?= $value['dateCreated']?></td>
+    </tr>
+    </table>
+    <?php foreach ($data_contenu as $key => $value):?>
     <section id="maliste">
+  
         <article id="mesTitres">
-            <p name="" value="" id="title">Title</p>
-            <p name="" value="" id="type">Type</p>
-            <p name="" value="" id="category">Category</p>
-            <p name="" value="" id="Auteur">Author</p>
-            <p name="" value="" id="DateUptade">Date Update</p>
-
+            <table>
+      <tr>
+            <td name="" value="" id="title"><?= $value['title']?></td>
+            <td name="" value="" id="type"><?= $value['type']?></td>
+            <td name="" value="" id="category"><?= $value['category']?></td>
+            <td name="" value="" id="Auteur"><?= $value['athor']?></td  >
+            <td name="" value="" id="DateUptade" style="font-size : 0.8rem"><?= $value['dateCreated']?></td>
+    </tr>
+    </table>
         </article>
         <article id="mesButtons">
             <form action="see">
@@ -32,9 +45,9 @@
             </form>
 
         </article>
-
+      
     </section>
-
+    <?php endforeach?>
 
 </main>
 
