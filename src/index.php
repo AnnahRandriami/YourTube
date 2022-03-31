@@ -24,9 +24,7 @@ switch ($route) {
         break;
     case 'profil':
         $data_users = $db->afficheUsers();
-  loadProfil();
-
-
+  
 
         //   var_dump($_POST);
        // var_dump($_FILES);
@@ -45,6 +43,8 @@ switch ($route) {
 
 
     case 'create':
+
+      $db->newUsers();
         require('/var/www/html/yourTube/views/templates/inscription.php');
         break;
 

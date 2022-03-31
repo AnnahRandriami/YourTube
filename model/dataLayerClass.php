@@ -43,8 +43,9 @@
     }
 
     function insertUsers($lastname, $firstname, $pseudo, $email, $passwords){
-        $sql = "INSERT INTO `users`(lastname, firstname, pseudo, email, passwords, roles) VALUES (:lastname,:fisrtname,:pseudo,:email,:passwords,'Utilisateur');";
-  try {
+        $sql = "INSERT INTO `users` (lastname, firstname , pseudo, email, passwords, roles) VALUES (:lastname, :firstname , :pseudo, :email,  :passwords, 'Utilisateur')";
+  
+        try {
     $result = $this->connexion->prepare($sql);
         $var =  $result->execute(array(
             ':lastname' => $lastname,
@@ -52,17 +53,29 @@
             ':pseudo' => $pseudo,
             ':email' => $email,
             ':passwords' => $passwords,
-           
+  
         ));
         if ($var){
-            return TRUE;
+            echo 'ok';
         }else{
-            return FALSE;
+            echo 'non';
         }
   } catch (PDOException $e) {
     echo $e->getMessage();
   }
     }
+
+    function newUsers(){
+      global $db;
+      $firstname = $_GET["firstname"];
+      $lastname = $_GET["lastname"];
+      $pseudo = $_GET["pseudo"];
+      $email = $_GET["email"];
+      $passwords = $_GET["passwords"];
+  $db->insertUsers($lastname, $firstname, $pseudo, $email, $passwords);
+
+    
+  }
  }
  
 
