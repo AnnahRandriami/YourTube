@@ -1,10 +1,17 @@
 <?php 
-
-
 require ('/var/www/html/yourTube/config/config.php');
 require ('/var/www/html/yourTube/model/dataLayerClass.php');
+require ('/var/www/html/yourTube/entity/categoryEntity.php');
+require ('/var/www/html/yourTube/entity/userEntity.php');
+require ('/var/www/html/yourTube/entity/contenuEntity.php');
+
 require ('function.php');
+
 $db = new dataLayer();
+
+
+
+
 //creation du router
 $url = ($_SERVER['PATH_INFO']);
 $action = explode ('/', $url);
@@ -16,6 +23,12 @@ switch ($route) {
         $data_contenu = $db-> afficheContenu();
         require('/var/www/html/yourTube/views/templates/accueil.php'); //definir le var/www
         break;
+
+        case 'inscription':
+            $users = $db->insertUsers(userEntity $users);
+      
+            require('/var/www/html/yourTube/views/templates/accueil.php'); //definir le var/www
+            break; 
     case 'playlist':
         $data_contenu = $db->afficheContenu();
         $data_users = $db->afficheUsers();

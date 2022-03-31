@@ -1,4 +1,9 @@
 <?php 
+require ('/var/www/html/yourTube/config/config.php');
+require ('/var/www/html/yourTube/model/dataLayerClass.php');
+
+ 
+
 
 /*function loadProfil(){
    {
@@ -38,14 +43,8 @@ function loadProfil(){
 }
 
 
-function newUsers(){
-    global $db;
-    $firstname = $_GET["firstname"];
-    $lastname = $_GET["lastname"];
-    $pseudo = $_GET["pseudo"];
-    $email = $_GET["email"];
-    $passwords = $_GET["passwords"];
-    $data_users= $db->insertUsers($lastname, $firstname, $pseudo, $email, $passwords);
-}
+
+  
+
 
 ?>
