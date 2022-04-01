@@ -37,8 +37,6 @@
               ':idUsers' => $_SESSION['users']['idUsers'],
             ));
          $dataUsers = $result->fetchAll(PDO::FETCH_ASSOC);
-     
-         $_SESSION['users'] = $dataUsers;
         return $dataUsers;
         } catch (PDOException $e) {
             echo $e->getMessage();
@@ -47,10 +45,10 @@
 
     function insertUsers($lastname, $firstname, $pseudo, $email, $passwords){
         $sql = "INSERT INTO `users` (lastname, firstname , pseudo, email, passwords, roles) VALUES (:lastname, :firstname , :pseudo, :email,  :passwords, 'Utilisateur')";
-
+        print_r('eto');
         try {
-    $result = $this->connexion->prepare($sql);
-        $var =  $result->execute(array(
+          $result = $this->connexion->prepare($sql);
+          $var =  $result->execute(array(
             ':lastname' => $lastname,
             ':firstname' => $firstname,
             ':pseudo' => $pseudo,
@@ -58,8 +56,10 @@
             ':passwords' => $passwords,
   
         ));
+        print_r('var' + $var);
         if ($var){
-           return true;
+          print_r('true' );
+           return $var;
         }else{
            return false;
         }
@@ -68,21 +68,33 @@
   }
     }
 
-    function testNewUsers($email){
+    function isUserExist($email){
       $sql = "SELECT email FROM users WHERE email = :email";
       try {
         $result = $this->connexion->prepare($sql);
        $result->execute(array(
-         ':email' => $_REQUEST['email'],
+         ':email' => $email,
        ));
 
        $testUsers = $result->fetch(PDO::FETCH_ASSOC);
-
-       if($testUsers && ($testUsers['email'] == $email)){
-        header('location: create');
+       if($testUsers['email'] == $email){
+          return true;
        }else{
-        header('location: home');
+        return false;
        }
+    
+      } catch (PDOException $e) {
+        echo $e->getMessage();
+      }
+    }
+
+    function getUserByMail($email){
+      
+      $sql= "SELECT * FROM users WHERE email = :email LIMIT 1";
+      try {
+        $result = $this->connexion->prepare($sql);
+        $result->execute(array(':email' => $email));
+        return $result->fetch(PDO::FETCH_ASSOC);
     
       } catch (PDOException $e) {
         echo $e->getMessage();
@@ -96,12 +108,19 @@
       $pseudo = $_REQUEST["pseudo"];
       $email = $_REQUEST["email"];
       $passwords = $_REQUEST["passwords"];
-     // print_r($pseudo);exit();
-     $db->testNewUsers($email);
-     $data_users= $db->insertUsers($lastname, $firstname, $pseudo, $email, $passwords);
-$_SESSION['users'] = $data_users;
-return $data_users;
- 
+   
+      if(!$db->isUserExist($email) ){
+        $db->insertUsers($lastname, $firstname, $pseudo, $email, $passwords);
+        $user = $db->getUserByMail($email);
+        header('location:home');
+        return $user;
+      
+      }else{
+        print_r('already exist ');
+        header('location:create');
+        return false;
+      }
+
   }
  }
  
