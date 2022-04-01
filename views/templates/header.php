@@ -17,20 +17,32 @@
 
 <nav>
   
-  <a href="home">Home</a>
  
-  <?php if (!$_SESSION['users']): ?>
-  <a href="login">Login</a>
-  <?php else : ?>
+ 
+  
+    <a href="home">Home</a>
+
+  
+
+<?php  if(isset ($_SESSION['users'])) :?>
     <a href="profil">Profil</a>
   <a href="add">Add</a>
   <a href="playlist">Playlist</a>
+ <?php endif ?>
+ 
+ 
+ <?php  if(!isset ($_SESSION['users'])) :?>
+  <a href="login">Login</a>
+  <?php else: ?>
   <a href="logout">Logout</a>
-  <?php endif  ?>
-  <?php $dataRole =  $_SESSION['users'][0]['roles'] ;
-        if($dataRole === "admin"):?> 
+  <?php endif ?>
+
+
+  <?php if(isset ($_SESSION['users']) && ($_SESSION['users']['roles']) === 'admin') :?>
+
   <a href="admin">Admin</a>
-         <?php endif  ?>
+  <?php endif ?>
+  
   <div class="animation start-home"></div>
   
 </nav>
