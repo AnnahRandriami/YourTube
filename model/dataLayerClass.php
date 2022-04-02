@@ -13,15 +13,24 @@
      }
 
 
-    function afficheContenu()
+    function afficheContenu($type = NULL, $category = NULL)
     {
         $sql = "SELECT * FROM mesContenus";
         try {
+          if(!is_null ($type)){
+            $sql .= " WHERE type = '".$type ."'";
+   
+          }
+          if(!is_null ($category)){
+            $sql .= " AND category = '".$category ."'";
+            //print_r($sql);exit();
+          }
             $result = $this->connexion->prepare($sql);
             $result->execute();
          $data_contenu = $result->fetchAll(PDO::FETCH_ASSOC);
          $_SESSION['contenu'] = $data_contenu;
         return $data_contenu;
+       
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -36,8 +45,9 @@
             $result->execute(array(
               ':idUsers' => $_SESSION['users']['idUsers'],
             ));
-         $dataUsers = $result->fetchAll(PDO::FETCH_ASSOC);
-        return $dataUsers;
+         $_SESSION['users'] = $result->fetchAll(PDO::FETCH_ASSOC);
+         $_SESSION['users'] = $dataUsers;
+         return $dataUsers;
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -45,7 +55,7 @@
 
     function insertUsers($lastname, $firstname, $pseudo, $email, $passwords){
         $sql = "INSERT INTO `users` (lastname, firstname , pseudo, email, passwords, roles) VALUES (:lastname, :firstname , :pseudo, :email,  :passwords, 'Utilisateur')";
-        print_r('eto');
+     
         try {
           $result = $this->connexion->prepare($sql);
           $var =  $result->execute(array(
@@ -56,9 +66,8 @@
             ':passwords' => $passwords,
   
         ));
-        print_r('var' + $var);
+
         if ($var){
-          print_r('true' );
            return $var;
         }else{
            return false;
@@ -94,8 +103,8 @@
       try {
         $result = $this->connexion->prepare($sql);
         $result->execute(array(':email' => $email));
-        return $result->fetch(PDO::FETCH_ASSOC);
-    
+        $_SESSION['users'] = $result->fetchAll(PDO::FETCH_ASSOC);
+    return  $_SESSION['users'];
       } catch (PDOException $e) {
         echo $e->getMessage();
       }
@@ -111,21 +120,51 @@
    
       if(!$db->isUserExist($email) ){
         $db->insertUsers($lastname, $firstname, $pseudo, $email, $passwords);
-        $user = $db->getUserByMail($email);
-        header('location:home');
-        return $user;
-      
+       $db->getUserByMail($email);
+        header('location:profil');
       }else{
-        print_r('already exist ');
-        header('location:create');
+       header('location:create');
         return false;
       }
 
   }
+function login(){
+  $sql = "SELECT * FROM users WHERE email = :email AND passwords = :passwords";
+ 
+  try {
+    $result = $this->connexion->prepare($sql);
+  $result->execute(array(
+      ':email' => $_REQUEST['email'],
+      ':passwords' => $_REQUEST['passwords'],
+    ));
+    $_SESSION['users']= $result->fetchAll(PDO::FETCH_ASSOC);
+if ($_SESSION['users'][0]['email'] === $_REQUEST['email'] && $_SESSION['users'][0]['passwords'] ===  $_REQUEST['passwords']){
+  header('location:profil');
+}else{
+  header('location:login');;
+
+}
+
+
+} catch (PDOException $e) {
+    echo $e->getMessage();
+}
+}
+
+
  }
  
 
+
+
+function logOut(){
+  session_destroy(); 
+  unset($_SESSION['users']);
+  header('location:home');
+}
    
+
+
 
 
 ?>

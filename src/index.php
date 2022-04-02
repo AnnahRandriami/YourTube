@@ -9,34 +9,30 @@ $db = new dataLayer();
 $url = ($_SERVER['PATH_INFO']);
 $action = explode ('/', $url);
 $route = $action[1];
-
 // affichage des templates
 
 session_start();
+print_r ($_SESSION['contenu']);
 
-
+//print_r ($_SESSION['users']);
 switch ($route) {
     case 'home':
-      
-        $data_contenu = $db-> afficheContenu();
+     
+        $data_contenu = $db-> afficheContenu('Images','Mariages');
         require('/var/www/html/yourTube/views/templates/accueil.php'); //definir le var/www
         break;
     case 'playlist':
-      
         $data_contenu = $db->afficheContenu();
-        $data_users = $db->afficheUsers();
-        
         require('/var/www/html/yourTube/views/templates/mesListes.php'); //definir le var/www
         break;
     case 'profil':
      
-        //$_SESSION['users']= $db->afficheUsers();
        
         require('/var/www/html/yourTube/views/templates/profil.php'); //definir le var/www
        
         break;
     case 'login':
-        
+   
 
         require('/var/www/html/yourTube/views/templates/connexion.php'); //definir le var/www
         break;
@@ -46,11 +42,12 @@ switch ($route) {
         break;
 
     case 'inscription':
-        
-      
-        $_SESSION['users']= $db->newUsers();
+     $db->newUsers();
         break;
 
+case 'getLogin':
+ $db->login();
+    break;
     case 'create':
        
         require('/var/www/html/yourTube/views/templates/inscription.php');
@@ -59,14 +56,11 @@ switch ($route) {
 
 
     case 'logout':
-       
-        session_destroy(); 
-     unset($_SESSION['users']);
-     require('/var/www/html/yourTube/views/templates/accueil.php');
+    logOut();
         break;
 
     default:
-    
+    $users = $db->newUsers();
         $data_contenu = $db->afficheContenu();
         require('/var/www/html/yourTube/views/templates/accueil.php'); //definir le var/www
         break;
