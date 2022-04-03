@@ -12,13 +12,14 @@ $route = $action[1];
 // affichage des templates
 
 session_start();
-print_r ($_SESSION['contenu']);
+//print_r ($_SESSION['contenu']);
 
 //print_r ($_SESSION['users']);
 switch ($route) {
     case 'home':
      
-        $data_contenu = $db-> afficheContenu('Images','Mariages');
+        $data_contenu = $db-> afficheContenu();
+   
         require('/var/www/html/yourTube/views/templates/accueil.php'); //definir le var/www
         break;
     case 'playlist':
@@ -53,16 +54,18 @@ case 'getLogin':
         require('/var/www/html/yourTube/views/templates/inscription.php');
         break;
 
-
+case 'myChoice':
+    $data_contenu = $db->afficheOne($idContenu);
+    print_r($data_contenu);
+    require('/var/www/html/yourTube/views/templates/seeOne.php');
+break;
 
     case 'logout':
     logOut();
         break;
 
     default:
-    $users = $db->newUsers();
-        $data_contenu = $db->afficheContenu();
-        require('/var/www/html/yourTube/views/templates/accueil.php'); //definir le var/www
+  echo '<h1>NOT FOUND</h1>';
         break;
 }
 

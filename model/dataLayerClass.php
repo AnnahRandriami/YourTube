@@ -19,7 +19,6 @@
         try {
           if(!is_null ($type)){
             $sql .= " WHERE type = '".$type ."'";
-   
           }
           if(!is_null ($category)){
             $sql .= " AND category = '".$category ."'";
@@ -36,22 +35,27 @@
         }
     }
 
-
-    function afficheUsers()
+    function afficheOne($idContenu)
     {
-        $sql = "SELECT * FROM users WHERE idUsers = :idUsers";
+        $sql = "SELECT * FROM mesContenus WHERE idContenu = :idContenu";
         try {
+         
             $result = $this->connexion->prepare($sql);
             $result->execute(array(
-              ':idUsers' => $_SESSION['users']['idUsers'],
+          ':idContenu' => $_REQUEST['idContenu'],
             ));
-         $_SESSION['users'] = $result->fetchAll(PDO::FETCH_ASSOC);
-         $_SESSION['users'] = $dataUsers;
-         return $dataUsers;
+         $data_contenu = $result->fetchAll(PDO::FETCH_ASSOC);
+         $_SESSION['contenu'] = $data_contenu;
+        return $data_contenu;
+       
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
     }
+
+
+
+   
 
     function insertUsers($lastname, $firstname, $pseudo, $email, $passwords){
         $sql = "INSERT INTO `users` (lastname, firstname , pseudo, email, passwords, roles) VALUES (:lastname, :firstname , :pseudo, :email,  :passwords, 'Utilisateur')";
