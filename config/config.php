@@ -2,9 +2,9 @@
 
 // compteUtilisateur phpmyadmin
 define("DB_USER", "root");
-define ("DB_PASSWORD" , "insert_password");
+define ("DB_PASSWORD" , "root123");
 define("HOST", "localhost");
-define("DB_NAME" , "youtube");
+define("DB_NAME" , "yourTube");
 
 /*define("DB_USER", "annah");
 define ("DB_PASSWORD" , "root");

@@ -27,7 +27,7 @@ switch ($route) {
         require('/var/www/html/yourTube/views/templates/mesListes.php'); //definir le var/www
         break;
     case 'profil':
-     
+     loadProfil();
        
         require('/var/www/html/yourTube/views/templates/profil.php'); //definir le var/www
        

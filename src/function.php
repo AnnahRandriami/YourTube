@@ -25,7 +25,7 @@ function loadProfil(){
             $type_fichier = $_FILES['file']['type']; //Le type du fichier. Par exemple, cela peut être « image/png ».
             $size = $_FILES['file']['size'] ; //La taille du fichier en octets.
            
-            if(move_uploaded_file($_FILES['file']['tmp_name'], "./toto/")) {
+            if(move_uploaded_file($_FILES['file']['tmp_name'], "./images/".$file_name)) {
                 echo 'Fichier enregistré';
             } else {
                 exit('Erreur lors de l\'enregistrement');
