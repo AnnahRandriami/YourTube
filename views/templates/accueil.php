@@ -5,23 +5,15 @@
         <div id="recherche">
 
 
-            <?php $types = [] ?>
-            <?php foreach ($data_contenu as $value) : ?>
-                <?php array_push($types, $value['type']); ?>
-            <?php endforeach ?>
-
-            <?php $category = [] ?>
-            <?php foreach ($data_contenu as $value) : ?>
-                <?php array_push($category, $value['category']); ?>
-            <?php endforeach ?>
 
             <form action="home" method="get">
                 <select class="form-select" aria-label="Default select example" id='type'>
-                    <?php foreach (array_unique($types) as $type) : ?>
-                        <option <?php if($type == $value['type']); echo 'selected;' ?>> <?php echo $type; ?> </option>
-                    <?php endforeach ?>
+                    <?php foreach ($type as $key => $value) : ?>
+                        <option <?php if ($type[0]['idType'] || $type[0]['idType']  == $value['idType']);
+                                echo 'selected' ?> value="<?= $value['idType'] ?>"> <?php echo $value['type']; ?> </option>
+                    <?php endforeach ?>$type['idType']
                 </select>
-                <button name="type" value="<?= $type ?>"  class="btn">Voir</button>
+                <button name="type" value="<?= $value['idType'] ?>" class="btn">Filtrer</button>
             </form>
 
 

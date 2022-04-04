@@ -53,6 +53,37 @@
         }
     }
 
+function selectType(){
+  $sql = "SELECT DISTINCT type, idType FROM category";
+  try {
+   
+      $result = $this->connexion->prepare($sql);
+      $result->execute();
+   $type = $result->fetchAll(PDO::FETCH_ASSOC);
+  return $type;
+ 
+  } catch (PDOException $e) {
+      echo $e->getMessage();
+  }
+}
+
+  function uptadeUsers()
+  {
+    $sql = "UPDATE `users` SET `lastname`= :lastname, `firstname`= :firstname,`pseudo`= :pseudo,`email`= :email,`passwords`= :passwords WHERE idUsers = :idUsers";
+    try {
+      $result = $this->connexion->prepare($sql);
+      $result->execute(array(
+        ':lastname' => $_REQUEST('lastname'),
+        ':firstname' => $_REQUEST('firstname'),
+        ':pseudo' => $_REQUEST('pseudo'),
+        ':email' => $_REQUEST('email'),
+        ':passwords' => $_REQUEST('passwords'),
+      ));
+    } catch (PDOException $e) {
+      echo $e->getMessage();
+  }
+}
+
 
 
    
