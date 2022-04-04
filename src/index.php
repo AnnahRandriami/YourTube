@@ -38,7 +38,9 @@ switch ($route) {
         require('/var/www/html/yourTube/views/templates/connexion.php'); //definir le var/www
         break;
     case 'add':
-        
+     
+        loadContent();
+
         require('/var/www/html/yourTube/views/templates/ajout.php'); //definir le var/www
         break;
 
