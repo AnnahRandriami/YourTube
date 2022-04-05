@@ -10,11 +10,11 @@
 
                 <div class="card mb-3">
                 <?php if ($data_contenu[0]['type'] === 'Images') : ?>
-                        <img src="http://localhost/yourTube/src/images/<?= $data_contenu[0]['lien'] ?>" alt="">
+                        <img src="<?= hosts.SP."src".SP."images".SP.$value['lien'] ?>" alt="">
                     <?php else : ?>
                         <video controls width="450">
-                            <source src="http://localhost/yourTube/src/videos/logos.mp4" type="video/webm">
-                            <source src="http://localhost/yourTube/src/videos/logos.mp4" type="video/mp4">
+                            <source src="<?= hosts.SP."src".SP."videos".SP."logos.mp4" ?>" type="video/webm">
+                            <source src="<?= hosts.SP."src".SP."videos".SP."logos.mp4" ?>" type="video/mp4">
                             Sorry, your browser doesn't support embedded videos.
                         </video>
                     <?php endif ?>
@@ -28,11 +28,11 @@
             <section id="lastUptade">
                 <div class="card" style="width: 18rem;">
                     <?php if ($data_contenu[0]['type'] === 'Images') : ?>
-                        <img src="http://localhost/yourTube/src/images/<?= $data_contenu[0]['lien'] ?>" alt="">
+                        <img src="<?= hosts.SP."src".SP."images".SP.$value['lien'] ?>" alt="">
                     <?php else : ?>
                         <video controls width="450">
-                            <source src="http://localhost/yourTube/src/videos/logos.mp4" type="video/webm">
-                            <source src="http://localhost/yourTube/src/videos/logos.mp4" type="video/mp4">
+                            <source src="<?= hosts.SP."src".SP."videos".SP."logos.mp4" ?>" type="video/webm">
+                            <source src="<?= hosts.SP."src".SP."videos".SP."logos.mp4" ?>" type="video/mp4">
                             Sorry, your browser doesn't support embedded videos.
                         </video>
                     <?php endif ?>

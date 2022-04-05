@@ -38,11 +38,11 @@
             <?php foreach ($data_contenu as $key => $value) : ?>
                 <div class="card" style="width: 30rem;">
                     <?php if ($value['type'] === 'Images') : ?>
-                        <img src="http://localhost/yourTube/src/images/<?= $value['lien'] ?>" alt="">
+                        <img src="<?= hosts.SP."src".SP."images".SP.$value['lien'] ?>" alt="">
                     <?php else : ?>
                         <video controls width="450">
-                            <source src="http://localhost/yourTube/src/videos/logos.mp4" type="video/webm">
-                            <source src="http://localhost/yourTube/src/videos/logos.mp4" type="video/mp4">
+                            <source src="<?= hosts.SP."src".SP."videos".SP."logos.mp4" ?>" type="video/webm">
+                            <source src="<?= hosts.SP."src".SP."videos".SP."logos.mp4" ?>" type="video/mp4">
                             Sorry, your browser doesn't support embedded videos.
                         </video>
                     <?php endif ?>
