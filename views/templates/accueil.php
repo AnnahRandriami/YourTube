@@ -17,16 +17,9 @@
       <button type="submit">Trier</button>
       </form>
   </div>
-          
-          
-
-
-            <form action="home">
-                
+            <form action="home">  
             <button type="submit">Tous</button>
             </form>
-            
-
         </div>
 
 

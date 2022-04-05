@@ -30,5 +30,3 @@
     </section>
 </main>
 <?php include('footer.php') ?>
-
-select `contenu`.`idContenu` AS `idContenu`,`contenu`.`idCategory` AS `idCategory`,`contenu`.`idUsers` AS `idUsers`,`contenu`.`title` AS `title`,`users`.`pseudo` AS `pseudo`,`category`.`type` AS `type`,`category`.`category` AS `category`,`contenu`.`content` AS `content`,`contenu`.`author` AS `author`,`contenu`.`lien` AS `lien`,`contenu`.`dateCreated` AS `dateCreated`,`contenu`.`dateUptade` AS `dateUptade` from ((`contenu` join `users`) join `category`) where ((`contenu`.`idUsers` = `users`.`idUsers`) and (`contenu`.`idCategory` = `category`.`idCategory`))

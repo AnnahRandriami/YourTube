@@ -14,16 +14,12 @@ class dataLayer
   }
 
 /*************REQUETE SELECT ********************** */
-  function afficheContenu($type = NULL, $category = NULL)
+  function afficheContenu()
   {
     $sql = "SELECT * FROM mesContenus";
     try {
-      if (!is_null($type)) {
-        $sql .= " WHERE type = '" . $type . "'";
-      }
-      if (!is_null($category)) {
-        $sql .= " AND category = '" . $category . "'";
-        //print_r($sql);exit();
+      if (isset($_REQUEST["type"])){
+          $sql .= " WHERE type = '" . $_REQUEST["type"] . "'";
       }
       $result = $this->connexion->prepare($sql);
       $result->execute();
@@ -35,7 +31,7 @@ class dataLayer
     }
   }
 
-  function afficheOne($idContenu)
+  function afficheOne()
   {
     $sql = "SELECT * FROM mesContenus WHERE idContenu = :idContenu";
     try {
@@ -137,7 +133,9 @@ class dataLayer
         ':passwords' => $_REQUEST['passwords'],
       ));
       $_SESSION['users'] = $result->fetchAll(PDO::FETCH_ASSOC);
-      if ($_SESSION['users'][0]['email'] === $_REQUEST['email'] && $_SESSION['users'][0]['passwords'] ===  $_REQUEST['passwords']) {
+  
+      if ($_SESSION['users'][0]['email'] === $_REQUEST['email'] && $_SESSION['users'][0]['passwords'] === $_REQUEST['passwords']) {
+    
         header('location:profil');
       } else {
         header('location:login');;
@@ -164,6 +162,25 @@ class dataLayer
        return $var;
       } else {
      return false;
+      }
+    } catch (PDOException $e) {
+      echo $e->getMessage();
+    }
+  }
+  function uptadeContenu ($title,$content, $author)
+  {
+    $sql = "UPDATE contenu SET title= :title , content= :content, author = :author WHERE idContenu = :idContenu"; 
+    try {
+      $result = $this->connexion->prepare($sql);
+      $var = $result->execute(array(
+        ':title' => $title,
+        ':content' => $content,
+        ':author' => $author,
+        ':idContenu' => $_GET['idContenu'],
+      ));
+      if ($var) {
+        return $var;
+      } else {
       }
     } catch (PDOException $e) {
       echo $e->getMessage();
@@ -210,8 +227,27 @@ class dataLayer
  $db->getUserByMail($email);
     header('location:profil');
   }
+  function actionUptadeContenu(){
+    global $db;
+    $title = $_REQUEST["title"];
+    $content = $_REQUEST["content"];
+    $author = $_REQUEST["author"];
+ $db-> uptadeContenu ($title,$content, $author);
+    header('location:home');
+  }
 
-
+  function uptadeLien()
+  {
+    $sql = "UPDATE contenu SET lien= :lien where lien isnull";
+    try {
+      $result = $this->connexion->prepare($sql);
+      $result->execute(array(
+        ':lien' => $_FILES['file']['name'],
+      ));
+    } catch (PDOException $e) {
+      echo $e->getMessage();
+    }
+  }
   /***********************REQUETE DELETE******************************** */
   function deleteUsers(){
     $sql = "DELETE FROM users where idUsers = :idUsers";
@@ -228,6 +264,18 @@ class dataLayer
       echo $e->getMessage();
     }
   }
+function deleteContenu(){
+  $sql = "DELETE FROM contenu where idContenu = :idContenu";
+  try {
+    $result = $this->connexion->prepare($sql);
+$result->execute(array(
+      ':idContenu' => $_GET['idContenu'],
+    ));
+     header('location:home');
+  } catch (PDOException $e) {
+    echo $e->getMessage();
+  }
+}
   function deleteCategory(){
     $sql= "DELETE FROM category ORDER BY idCategory DESC limit 1";
     try {
@@ -267,9 +315,9 @@ class dataLayer
   } 
 
 
-  function insertContenu($idUsers,$type, $idCategory, $title, $content, $lien, $author, $category)
+  function insertContenu($idUsers, $idCategory, $title, $content, $author, $lien)
   {
-    $sql = "INSERT INTO contenu (idUsers, idCategory , title, content, lien, author, type, category) VALUES (:idUsers, :idCategory , :title, :content,  :lien, :author, :type, :category)";
+    $sql = "INSERT INTO contenu (idUsers, idCategory , title, content, author, lien) VALUES (:idUsers, :idCategory , :title, :content,:author, :lien)";
 
     try {
       $result = $this->connexion->prepare($sql);
@@ -278,10 +326,8 @@ class dataLayer
         ':idCategory' => $idCategory,
         ':title' => $title,
         ':content' => $content,
-        ':lien' => $lien,
         ':author' => $author,
-        ':type'  =>$type,
-        ':category' =>$category,
+        'lien' => $lien,
       ));
 
       if ($var) {
@@ -312,9 +358,5 @@ class dataLayer
  
 
 }
-
-
-
-
 
 ?>

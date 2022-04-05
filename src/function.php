@@ -1,24 +1,4 @@
 <?php 
-/*************upload photo de profil******************** */
-function loadProfil(){
-    if(isset($_FILES['file'])) {
-        if($_FILES['file']['error'] == 0 && is_uploaded_file($_FILES['file']['tmp_name'])) {
-          // code de l'utilisateur enregistré dans le formulaire.
-            $file_name = $_FILES['file']['name']; //Le nom original du fichier, comme sur le disque du visiteur (exemple : mon_icone.pdf).
-            $type_fichier = $_FILES['file']['type']; //Le type du fichier. Par exemple, cela peut être « image/png ».
-            $size = $_FILES['file']['size'] ; //La taille du fichier en octets.
-           
-            if(move_uploaded_file($_FILES['file']['tmp_name'], "./images/".$file_name)) {
-                echo 'Fichier enregistré';
-            } else {
-                exit('Erreur lors de l\'enregistrement');
-            }
-        } else {
-            exit('Fichier non uploadé');
-        }
-    }
-
-}
 
 /*******************upload photo contenu**************************** */
 
@@ -33,7 +13,8 @@ function loadContent(){
             $size = $_FILES['file']['size'] ; //La taille du fichier en octets.
         
             if(move_uploaded_file($_FILES['file']['tmp_name'], "./images/".$file_name)) {
-                echo 'Fichier enregistré';
+               
+              echo 'Fichier enregistré';
             } else {
                 exit('Erreur lors de l\'enregistrement');
             }
@@ -60,15 +41,14 @@ function actionInsertCategory()
   function actionInsertContenu()
   {
     global $db;
-    $idUsers  = $_SESSION['idUsers'];
+    $idUsers  = $_SESSION['users'][0]['idUsers'];
     $idCategory = $_GET['idCategory'];
-    $type = $_REQUEST['type'];
-    $category = $_REQUEST['category'];
     $title = $_REQUEST['title'];
     $content = $_REQUEST['content'];
-    $lien = $_REQUEST['lien'];
+    $lien = $_FILES['file']['name'];
     $author = $_REQUEST['author'];
-    $db->insertContenu($idUsers,$type,$category, $idCategory, $title, $content, $lien, $author);
+    $db->insertContenu($idUsers, $idCategory, $title, $content, $author,$lien);
+var_dump($_FILES['file']['name']);
   }
 
 /********************action ajout utilisateur************************* */
@@ -80,14 +60,19 @@ function actionInsertCategory()
     $lastname = $_REQUEST["lastname"];
     $pseudo = $_REQUEST["pseudo"];
     $email = $_REQUEST["email"];
-    $passwords = $_REQUEST["passwords"];
+    $passwords = ($_REQUEST["passwords"]);
 
     if (!$db->isUserExist($email)) {
       $db->insertUsers($lastname, $firstname, $pseudo, $email, $passwords);
       $db->getUserByMail($email);
       header('location:profil');
+  
+   
     } else {
+    
       header('location:create');
+
+      echo 'jfdfd';
       return false;
     }
   }

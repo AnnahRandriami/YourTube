@@ -36,12 +36,6 @@
   <?php else: ?>
   <a href="logout">Logout</a>
   <?php endif ?>
-
-
-  <?php if(isset ($_SESSION['users']) && ($_SESSION['users']['roles']) === 'admin') :?>
-
-  <a href="admin">Admin</a>
-  <?php endif ?>
   
   <div class="animation start-home"></div>
   
