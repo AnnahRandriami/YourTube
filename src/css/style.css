@@ -3,9 +3,7 @@ body{
     padding: 0;
     
 }
-header{
-  background-color: #efefef;
-}
+
 
 #menu{
     background-color: #e2d9f3; 
@@ -473,6 +471,11 @@ h3{
     font-size: 1rem;
   }
   
-
+#hello, #btn2{
+  display: flex;
+  gap: 50px;
+margin-left: 100px;
+margin-top: 20px;
+}
 
   

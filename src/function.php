@@ -1,22 +1,5 @@
 <?php 
-
-/*function loadProfil(){
-   {
-        $contentFile = array(
-         $tmpName = $_FILES['file']['tmp_name'],
-         $FileName = $_FILES['file']['name'],
-         $FileType = $_FILES['file']['type'],
-         $error = $_FILES['file']['error'],
-         $size = $_FILES['file']['size'],
-        );
- if (move_uploaded_file($contentFile[0], 'images/'.$contentFile[1])){
-     echo 'eeeee';
- };
-    }
-
-    return $contentFile;
-}*/
-
+/*************upload photo de profil******************** */
 function loadProfil(){
     if(isset($_FILES['file'])) {
         if($_FILES['file']['error'] == 0 && is_uploaded_file($_FILES['file']['tmp_name'])) {
@@ -36,6 +19,8 @@ function loadProfil(){
     }
 
 }
+
+/*******************upload photo contenu**************************** */
 
 function loadContent(){
  
@@ -59,15 +44,60 @@ function loadContent(){
 
 }
 
+/*******************action ajout category*************************** */
 
-function newUsers(){
+function actionInsertCategory()
+  {
     global $db;
-    $firstname = $_GET["firstname"];
-    $lastname = $_GET["lastname"];
-    $pseudo = $_GET["pseudo"];
-    $email = $_GET["email"];
-    $passwords = $_GET["passwords"];
-    $data_users= $db->insertUsers($lastname, $firstname, $pseudo, $email, $passwords);
-}
+    $type = $_REQUEST['type'];
+    $category = $_REQUEST['category'];
+    $idType = $_REQUEST['idType'];
+    $db->insertCategory($type, $category, $idType);
+  }
+
+
+  /**************action ajout contenu********************** */
+  function actionInsertContenu()
+  {
+    global $db;
+    $idUsers  = $_SESSION['idUsers'];
+    $idCategory = $_GET['idCategory'];
+    $type = $_REQUEST['type'];
+    $category = $_REQUEST['category'];
+    $title = $_REQUEST['title'];
+    $content = $_REQUEST['content'];
+    $lien = $_REQUEST['lien'];
+    $author = $_REQUEST['author'];
+    $db->insertContenu($idUsers,$type,$category, $idCategory, $title, $content, $lien, $author);
+  }
+
+/********************action ajout utilisateur************************* */
+
+  function newUsers()
+  {
+    global $db;
+    $firstname = $_REQUEST["firstname"];
+    $lastname = $_REQUEST["lastname"];
+    $pseudo = $_REQUEST["pseudo"];
+    $email = $_REQUEST["email"];
+    $passwords = $_REQUEST["passwords"];
+
+    if (!$db->isUserExist($email)) {
+      $db->insertUsers($lastname, $firstname, $pseudo, $email, $passwords);
+      $db->getUserByMail($email);
+      header('location:profil');
+    } else {
+      header('location:create');
+      return false;
+    }
+  }
+/*******************action deconnexion ***************** */
+  function logOut()
+  {
+    session_destroy();
+    unset($_SESSION['users']);
+    header('location:home');
+  }
+    
 
 ?>

@@ -1,14 +1,9 @@
 <?php include('header.php') ?>
 <main>
 
-    <div id="playlist">
-        <select class="form-select" aria-label="Default select example">
-            <option value="1">Type</option>
-        </select>
-        <select class="form-select" aria-label="Default select example">
-            <option value="1">Category</option>
-        </select>
-    </div>
+
+
+
 
     <table>
         <tr>

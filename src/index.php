@@ -12,14 +12,11 @@ $route = $action[1];
 // affichage des templates
 
 session_start();
-//print_r ($_SESSION['contenu']);
-
-//print_r ($_SESSION['users']);
 switch ($route) {
     case 'home':
         $type= $db->selectType();
-        print_r($type);
-        $data_contenu = $db->afficheContenu();
+        $category = $db->selectCategory();
+        $data_contenu = $db->afficheContenu($_REQUEST['type'], $_REQUEST['category']);
 
         require('/var/www/html/yourTube/views/templates/accueil.php'); //definir le var/www
         break;
@@ -29,25 +26,44 @@ switch ($route) {
         require('/var/www/html/yourTube/views/templates/mesListes.php'); //definir le var/www
         break;
     case 'profil':
-
-
+        loadProfil();
         require('/var/www/html/yourTube/views/templates/profil.php'); //definir le var/www
-
         break;
     case 'login':
-
-
         require('/var/www/html/yourTube/views/templates/connexion.php'); //definir le var/www
         break;
     case 'add':
 
+      
+        $type = $db->selectType();
+       $coco = array($type[0]['idType'],$type[1]['idType']);
+
+    
+       $category = $db->selectCategory();
+       $mesTypes= array_merge($videos,$images);
+      $lastCategory = $db-> lastCategory();
+        require('/var/www/html/yourTube/views/templates/ajoutCategory.php'); //definir le var/www
+        break;
+    case 'suiteAdd':
+        actionInsertCategory();
+       $db->uptTypeImage();
+       $db->uptTypeVideo();
+        $lastCategory = $db-> lastCategory();
+      
+        loadProfil();
         require('/var/www/html/yourTube/views/templates/ajout.php'); //definir le var/www
         break;
-
-    case 'inscription':
-        $db->newUsers();
+        case 'addContenu':
+     $lastCategory = $db-> lastCategory();
+     actionInsertContenu();
+     require('/var/www/html/yourTube/views/templates/ajout.php');
         break;
-
+    case 'inscription':
+        newUsers();
+        break;
+    case 'annuler':
+       $db->deleteCategory();
+        break;
     case 'getLogin':
         $db->login();
         break;
@@ -65,10 +81,14 @@ switch ($route) {
         break;
     case 'update':
         $data_contenu = $db->afficheOne($idContenu);
-        print_r($data_contenu);
         require('/var/www/html/yourTube/views/templates/uptade.php');
         break;
-
+    case 'actionUptade':
+      $db->addUptadeUsers();
+        break;
+        case 'deleteUser':
+            $db->deleteUsers();
+break;
     default:
         echo '<h1>NOT FOUND</h1>';
         break;

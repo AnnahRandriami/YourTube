@@ -5,23 +5,33 @@
         <div id="recherche">
 
 
+  <div id="video">
+      <form action="home">
 
-            <form action="home" method="get">
-                <select class="form-select" aria-label="Default select example" id='type'>
-                    <?php foreach ($type as $key => $value) : ?>
-                        <option <?php if ($type[0]['idType'] || $type[0]['idType']  == $value['idType']);
-                                echo 'selected' ?> value="<?= $value['idType'] ?>"> <?php echo $value['type']; ?> </option>
-                    <?php endforeach ?>$type['idType']
-                </select>
-                <button name="type" value="<?= $value['idType'] ?>" class="btn">Filtrer</button>
+          <select name="type" class="form-select">
+              <?php foreach ($type as $key => $value) : ?>
+                  <option name="type" selected value="<?= $value['type'] ?>"><?= $value['type'] ?></option>
+              <?php endforeach ?>
+  
+      </select>
+      <button type="submit">Trier</button>
+      </form>
+  </div>
+          
+          
+
+
+            <form action="home">
+                
+            <button type="submit">Tous</button>
             </form>
+            
+
+        </div>
 
 
-            <select class="form-select" aria-label="Default select example">
-                <?php foreach (array_unique($category) as $category) : ?>
-                    <option value="<?php echo $category; ?>"><?php echo $category; ?></option>
-                <?php endforeach ?>
-            </select>
+        </form>
+
         </div>
 
         <section id="liste">
