@@ -45,10 +45,9 @@ function actionInsertCategory()
     $idCategory = $_GET['idCategory'];
     $title = $_REQUEST['title'];
     $content = $_REQUEST['content'];
-    $lien = $_FILES['file']['name'];
+    $lien = $_REQUEST['lien'];
     $author = $_REQUEST['author'];
     $db->insertContenu($idUsers, $idCategory, $title, $content, $author,$lien);
-var_dump($_FILES['file']['name']);
   }
 
 /********************action ajout utilisateur************************* */

@@ -1,6 +1,6 @@
 
 <?php
-define("hosts", 'http://localhost/yourTube');
+define("hosts", 'http://192.168.1.34/yourTube');
 define("SRC",  dirname(__FILE__));
 define("ROOT",  dirname(SRC));
 define("SP",  DIRECTORY_SEPARATOR);
@@ -22,8 +22,6 @@ $action = explode('/', $url);
 $route = $action[1];
 // affichage des template
 session_start();
- print_r($_SESSION['users']);
-
 switch ($route) {
     case 'home':
         $type = $db->selectType();
@@ -59,15 +57,20 @@ switch ($route) {
         $lastCategory = $db->lastCategory();
         $db->uptTypeImage();
         $db->uptTypeVideo();
-        loadContent();
         actionInsertCategory();
         require ROOT . SP . "views" . SP . "templates" . SP . "ajout.php";
         break;
 
+        case 'loadimg':
+            $lastCategory = $db->lastCategory();
+            loadContent();
+            require ROOT . SP . "views" . SP . "templates" . SP . "ajout.php";
+            break;
 /***bouton ajout contenu dans image */
 case 'addContenu':
     actionInsertContenu();
-
+    $data_contenu = $db->afficheOne($idContenu);
+    require VIEWS . SP . "templates" . SP . "seeOne.php";
     break;
     
     case 'inscription':
@@ -115,17 +118,17 @@ case 'addContenu':
     case 'deleteUser':
         $db->deleteUsers();
         break;
-
-
-    case '':
+        case ' ':
         $type = $db->selectType();
+            $category = $db->selectCategory();
+            $data_contenu = $db->afficheContenu();
+        require ROOT . SP . "views" . SP . "templates" . SP . "accueil.php";
+            break;
+    default:
+    $type = $db->selectType();
         $category = $db->selectCategory();
         $data_contenu = $db->afficheContenu();
-        require ROOT . SP . "views" . SP . "templates" . SP . "accueil.php";
-        break;
-
-    default:
-        echo '<h1>NOT FOUND</h1>';
+    require ROOT . SP . "views" . SP . "templates" . SP . "accueil.php";
         break;
 }
 
