@@ -1,40 +1,48 @@
 <?php include('header.php') ?>
 <main>
 
-    <div id="playlist">
-        <select class="form-select" aria-label="Default select example">
-            <option value="1">Type</option>
-        </select>
-        <select class="form-select" aria-label="Default select example">
-            <option value="1">Category</option>
-        </select>
-    </div>
 
 
-    <section id="maliste">
-        <article id="mesTitres">
-            <p name="" value="" id="title">Title</p>
-            <p name="" value="" id="type">Type</p>
-            <p name="" value="" id="category">Category</p>
-            <p name="" value="" id="Auteur">Author</p>
-            <p name="" value="" id="DateUptade">Date Update</p>
 
-        </article>
-        <article id="mesButtons">
-            <form action="see">
-                <button href="#" class="btn">Voir</button>
-            </form>
-            <form action="update">
-                <button href="#" class="btn">Modifier</button>
-            </form>
-            <form action="delete">
-                <button href="#" class="btn">Supprimer</button>
-            </form>
 
-        </article>
+    <table>
+        <tr>
+            <td name="" value="" id="title"><?= $value['title'] ?></td>
+            <td name="" value="" id="type"><?= $value['type'] ?></td>
+            <td name="" value="" id="category"><?= $value['category'] ?></td>
+            <td name="" value="" id="Auteur"><?= $value['athor'] ?></td>
+            <td name="" value="" id="DateUptade" style="font-size : 0.8rem"><?= $value['dateCreated'] ?></td>
+        </tr>
+    </table>
+    <?php foreach ($data_contenu as $key => $value) : ?>
+        <section id="maliste">
 
-    </section>
+            <article id="mesTitres">
+                <table>
+                    <tr>
+                        <td name="" value="" id="title"><?= $value['title'] ?></td>
+                        <td name="" value="" id="type"><?= $value['type'] ?></td>
+                        <td name="" value="" id="category"><?= $value['category'] ?></td>
+                        <td name="" value="" id="Auteur"><?= $value['athor'] ?></td>
+                        <td name="" value="" id="DateUptade" style="font-size : 0.8rem"><?= $value['dateCreated'] ?></td>
+                    </tr>
+                </table>
+            </article>
+            <article id="mesButtons">
+                <form action="myChoice" method="get">
+                    <button name="idContenu" value="<?= $value['idContenu'] ?>" href="#" class="btn">Voir</button>
+                </form>
+                <form action="update">
+                <button name="idContenu" value="<?= $value['idContenu'] ?>" href="#" class="btn">Modifier</button>
+                </form>
+                <form action="delete">
+                    <button href="#" class="btn">Supprimer</button>
+                </form>
 
+            </article>
+
+        </section>
+    <?php endforeach ?>
 
 </main>
 
